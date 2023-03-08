@@ -24,7 +24,7 @@ import qualified Data.Text.Format           as TF
 import qualified Data.Text.Lazy             as TL
 import qualified Data.Text.Lazy.Builder     as TL
 
-data Currency = CHF | USD | EUR deriving (Enum, Bounded, Ord, Eq)
+data Currency = FCFA | USD | EUR deriving (Enum, Bounded, Ord, Eq)
 
 newtype Value = Value { val :: Double } deriving (Fractional, Num)
 
@@ -72,7 +72,7 @@ printValue :: Value -> T.Text
 printValue (Value x) = TL.toStrict $ TL.toLazyText $ TF.fixed 2 x
 
 currencyCode :: Currency -> T.Text
-currencyCode CHF = "CHF"
+currencyCode FCFA = "FCFA"
 currencyCode USD = "USD"
 currencyCode EUR = "EUR"
 
@@ -124,11 +124,11 @@ ourAddress =
 
 theirAddress :: [T.Text]
 theirAddress  =
-  [ "The Client"
-  , "83 Lansdowne Drive"
-  , "14 Aldington Court"
-  , "E8 3HB London"
-  , "England" ]
+  [ "TSAGUE WAMBA"
+  , "Nsape pk-16"
+  , "BEPANDA YONYON"
+  , "OYACK"
+  , "CAMEROUN" ]
 
 renderInvoice :: Invoice -> Html ()
 renderInvoice invoice =
@@ -163,17 +163,17 @@ renderInvoice invoice =
 invoiceOctober2016 :: Html ()
 invoiceOctober2016 = renderInvoice Invoice
   { invoiceHeader = [ "Invoice #: 5015"
-                    , "Created: 7th of November 2016"
-                    , "Due: 7th of December 2016" ]
+                    , "Created: 7th of March 2023"
+                    , "Due: 7th of April 2023" ]
   , invoiceFrom = ourAddress
   , invoiceTo   = theirAddress
-  , invoiceSummary = "CHF 2,440 and USD 132 is now due for IT support, maintenance, development, travel expenses and material acquisition during October 2016."
+  , invoiceSummary = "FCFA 2,440,000 and USD 132 is now due for IT support, maintenance, development, travel expenses and material acquisition during October 2016."
   , invoiceEntries = [expensiveHours, internalHours, hotel] }
   where
     expensiveHours = Entry
       { entryQuantity = 8
       , entryDescr = "expensive hours on brand new system"
-      , entryUnitPrice = [singleCurrencyBill (CHF, 240)] }
+      , entryUnitPrice = [singleCurrencyBill (FCFA, 240)] }
     internalHours = Entry
       { entryQuantity = 11
       , entryDescr = "cheap hours in America"
@@ -181,4 +181,4 @@ invoiceOctober2016 = renderInvoice Invoice
     hotel = Entry
         { entryQuantity = 1
         , entryDescr = "Night at the hotel"
-        , entryUnitPrice = [singleCurrencyBill (CHF, 520.00)] }
+        , entryUnitPrice = [singleCurrencyBill (FCFA, 520.000)] }
